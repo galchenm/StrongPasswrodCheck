@@ -1,35 +1,38 @@
 from getpass import getpass
 
 password = getpass("Enter your password: ")
-result = []
+result = {}
 
 if len(password) >= 8:
-  result.append(True)
+  result['length'] = True
 else:
-  result.append(False)
+  result['length'] = False
 
 if any(char.isdigit() for char in password):
-  result.append(True)
+  result['digit'] = True
 else:
-  result.append(False)
+  result['digit'] = False
 
 if any(char.isupper() for char in password):
-  result.append(True)
+  result['upper-case'] = True
 else:
-  result.append(False)
+  result['upper-case'] = False
 
 if any(char.islower() for char in password):
-  result.append(True)
+  result['lower-case'] = True
 else:
-  result.append(False)
+  result['lower-case'] = False
 
 if any(char in "!@#$%^&*()_+-=" for char in password):
-  result.append(True)
+  result['special-symbol'] = True
 else:
-  result.append(False)
+  result['special-symbol'] = False
 
-if all(result):
+if all(result.values()):
   print("Strong password")
-else: 
+else:
   print("Weak password")
-  
+  print("The problem is withe the following:")
+  for key, value in result.items():
+    if not value:
+      print(key)
